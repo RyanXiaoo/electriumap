@@ -20,6 +20,6 @@
 
 ### Frontend
 
-- Gordon Zhang, @gordonzhang1
+- (Lead) Gordon Zhang, @gordonzhang1
 
 ### Backend
