@@ -20,4 +20,5 @@
 
 ### Frontend
 
+- Kaibo Huang, @Kaibo-Huang
 ### Backend
