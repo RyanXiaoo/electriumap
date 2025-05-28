@@ -19,5 +19,6 @@
 ### Design
 
 ### Frontend
+- Hannah Wiens, @FlameAndFlash
 
 ### Backend
