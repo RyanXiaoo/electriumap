@@ -20,4 +20,6 @@
 
 ### Frontend
 
+- Gordon Zhang, @gordonzhang1
+
 ### Backend
