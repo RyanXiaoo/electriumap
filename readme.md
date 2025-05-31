@@ -19,5 +19,6 @@
 ### Design
 
 ### Frontend
+- Rohan Saha, @rohansaha27
 
 ### Backend
