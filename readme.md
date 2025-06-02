@@ -20,5 +20,5 @@
 
 ### Frontend
 - Rohan Saha, @rohansaha27
-
+- Ashley Peng, @a33peng
 ### Backend
