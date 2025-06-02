@@ -19,6 +19,7 @@
 ### Design
 
 ### Frontend
+- Hannah Wiens, @FlameAndFlash
 - Kaibo Huang, @Kaibo-Huang
 - Rohan Saha, @rohansaha27
 - Ashley Peng, @a33peng
