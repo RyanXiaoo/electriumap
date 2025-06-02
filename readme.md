@@ -19,7 +19,9 @@
 ### Design
 
 ### Frontend
-
 - (Lead) Gordon Zhang, @gordonzhang1
-
+- Hannah Wiens, @FlameAndFlash
+- Kaibo Huang, @Kaibo-Huang
+- Rohan Saha, @rohansaha27
+- Ashley Peng, @a33peng
 ### Backend
