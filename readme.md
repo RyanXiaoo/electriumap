@@ -70,10 +70,6 @@
 
 * Nathan Li, [@qiz-li](https://github.com/qiz-li)
 
-### 🎨 Design
-
-*(TBD)*
-
 ### 💻 Frontend
 
 * **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
