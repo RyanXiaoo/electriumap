@@ -23,8 +23,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/Electrium-Mobility/map-of-the-future.git
-   cd map-of-the-future
+   git clone https://github.com/Electrium-Mobility/electriumap.git
+   cd electriumap
    ```
 
 2. **Install dependencies**
