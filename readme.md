@@ -87,6 +87,7 @@
 * **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
 * Rupert Maiti, [@baburama](https://github.com/baburama)
 * Kirpa Chandok, [@krpchandok](https://github.com/krpchandok)
+* Anastasiya Volgina, [@Anastasiya006](https://github.com/Anastasiya006)
 
 ---
 
