@@ -25,6 +25,7 @@
    ```bash
    git clone https://github.com/Electrium-Mobility/electriumap.git
    cd electriumap
+   cd frontend
    ```
 
 2. **Install dependencies**
@@ -46,21 +47,21 @@
 
 ## 🧪 Available Scripts
 
-* `npm run dev` – Runs the app in development mode
-* `npm run build` – Builds the app for production
-* `npm start` – Starts the production build
-* `npm run lint` – Runs ESLint on the project
+- `npm run dev` – Runs the app in development mode
+- `npm run build` – Builds the app for production
+- `npm start` – Starts the production build
+- `npm run lint` – Runs ESLint on the project
 
 ---
 
 ## 📁 Tech Stack
 
-* **Framework**: Next.js (React + SSR)
-* **Language**: TypeScript (optionally JS if no TS used yet)
-* **Styling**: Tailwind CSS
-* **UI Library**: shadcn/ui
-* **API**: Mapbox API (planned)
-* **Deployment**: Vercel
+- **Framework**: Next.js (React + SSR)
+- **Language**: TypeScript (optionally JS if no TS used yet)
+- **Styling**: Tailwind CSS
+- **UI Library**: shadcn/ui
+- **API**: Mapbox API (planned)
+- **Deployment**: Vercel
 
 ---
 
@@ -68,19 +69,19 @@
 
 ### 🧠 Lead
 
-* Nathan Li, [@qiz-li](https://github.com/qiz-li)
+- Nathan Li, [@qiz-li](https://github.com/qiz-li)
 
 ### 💻 Frontend
 
-* **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
-* Hannah Wiens, [@FlameAndFlash](https://github.com/FlameAndFlash)
-* Kaibo Huang, [@Kaibo-Huang](https://github.com/Kaibo-Huang)
-* Rohan Saha, [@rohansaha27](https://github.com/rohansaha27)
-* Ashley Peng, [@a33peng](https://github.com/a33peng)
+- **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
+- Hannah Wiens, [@FlameAndFlash](https://github.com/FlameAndFlash)
+- Kaibo Huang, [@Kaibo-Huang](https://github.com/Kaibo-Huang)
+- Rohan Saha, [@rohansaha27](https://github.com/rohansaha27)
+- Ashley Peng, [@a33peng](https://github.com/a33peng)
 
 ### 🔧 Backend
 
-* **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
+- **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
 
 ---
 
