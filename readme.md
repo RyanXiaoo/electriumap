@@ -69,6 +69,7 @@
 ### 🧠 Lead
 
 * Nathan Li, [@qiz-li](https://github.com/qiz-li)
+* Nur Iscan, [@nur4o4](https://github.com/nur4o4)
 
 ### 💻 Frontend
 
