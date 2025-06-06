@@ -20,6 +20,8 @@
 
 ## ⚙️ Setup Instructions
 
+
+
 1. **Clone the repository**
 
    ```bash
@@ -82,6 +84,7 @@
 ### 🔧 Backend
 
 * **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
+* Rupert Maiti, [@baburama](https://github.com/baburama)
 
 ---
 
