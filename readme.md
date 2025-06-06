@@ -20,6 +20,7 @@
 
 ## ⚙️ Setup Instructions
 
+
 1. **Clone the repository**
 
    ```bash
@@ -88,6 +89,7 @@
 * Rupert Maiti, [@baburama](https://github.com/baburama)
 * Kirpa Chandok, [@krpchandok](https://github.com/krpchandok)
 * Anastasiya Volgina, [@Anastasiya006](https://github.com/Anastasiya006)
+* Ryan Xiao, [@RyanXiaoo](https://github.com/RyanXiaoo)
 
 ---
 
