@@ -74,6 +74,8 @@
 * Nathan Li, [@qiz-li](https://github.com/qiz-li)
 * Nur Iscan, [@nur4o4](https://github.com/nur4o4)
 
+### 🎨 Design
+
 ### 💻 Frontend
 
 * **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
