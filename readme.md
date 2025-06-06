@@ -27,6 +27,7 @@
    ```bash
    git clone https://github.com/Electrium-Mobility/electriumap.git
    cd electriumap
+   cd frontend
    ```
 
 2. **Install dependencies**
