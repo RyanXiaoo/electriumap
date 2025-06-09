@@ -56,8 +56,8 @@
 
 ## 📁 Tech Stack
 
-- **Framework**: Next.js (React + SSR)
-- **Language**: TypeScript (optionally JS if no TS used yet)
+- **Framework**: Next.js
+- **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Library**: shadcn/ui
 - **API**: Mapbox API (planned)
