@@ -12,60 +12,7 @@
 
 ---
 
-## 🧬 Overview
-
-**Electriumap** is a crowdsourced dynamic web app built with **Next.js**.
-
----
-
-## ⚙️ Setup Instructions
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/Electrium-Mobility/electriumap.git
-   cd electriumap
-   cd frontend
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Visit your app**
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 🧪 Available Scripts
-
-* `npm run dev` – Runs the app in development mode
-* `npm run build` – Builds the app for production
-* `npm start` – Starts the production build
-* `npm run lint` – Runs ESLint on the project
-
----
-
-## 📁 Tech Stack
-
-* **Framework**: Next.js (React + SSR)
-* **Language**: TypeScript (optionally JS if no TS used yet)
-* **Styling**: Tailwind CSS
-* **UI Library**: shadcn/ui
-* **API**: Mapbox API (planned)
-* **Deployment**: Vercel
-
----
-
-## 👥 Built By
+## Built By
 
 ### 🧠 Lead
 
@@ -76,11 +23,11 @@
 
 ### 💻 Frontend
 
-* **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
-* Hannah Wiens, [@FlameAndFlash](https://github.com/FlameAndFlash)
-* Kaibo Huang, [@Kaibo-Huang](https://github.com/Kaibo-Huang)
-* Rohan Saha, [@rohansaha27](https://github.com/rohansaha27)
-* Ashley Peng, [@a33peng](https://github.com/a33peng)
+- **Lead**: Gordon Zhang, [@gordonzhang1](https://github.com/gordonzhang1)
+- Hannah Wiens, [@FlameAndFlash](https://github.com/FlameAndFlash)
+- Kaibo Huang, [@Kaibo-Huang](https://github.com/Kaibo-Huang)
+- Rohan Saha, [@rohansaha27](https://github.com/rohansaha27)
+- Ashley Peng, [@a33peng](https://github.com/a33peng)
 
 ### 🔧 Backend
 
@@ -90,11 +37,3 @@
 * Anastasiya Volgina, [@Anastasiya006](https://github.com/Anastasiya006)
 * Ryan Xiao, [@RyanXiaoo](https://github.com/RyanXiaoo)
 * Likhitha Koppula, [@likhithak10](https://github.com/likhithak10)
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](./LICENSE).
-
----
