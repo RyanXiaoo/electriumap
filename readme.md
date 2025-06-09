@@ -12,28 +12,14 @@
 
 ---
 
-## 🧬 Overview
-
-**Electriumap** is a crowdsourced dynamic web app built with **Next.js**.
-
----
-
-## 📁 Tech Stack
-
-- **Framework**: Next.js
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Library**: shadcn/ui
-- **API**: Mapbox API (planned)
-- **Deployment**: Vercel
-
----
-
-## 👥 Built By
+## Built By
 
 ### 🧠 Lead
 
-- Nathan Li, [@qiz-li](https://github.com/qiz-li)
+* Nathan Li, [@qiz-li](https://github.com/qiz-li)
+* Nur Iscan, [@nur4o4](https://github.com/nur4o4)
+
+### 🎨 Design
 
 ### 💻 Frontend
 
@@ -45,12 +31,9 @@
 
 ### 🔧 Backend
 
-- **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](./LICENSE).
-
----
+* **Lead**: Zhiyuan Guo, [@ZhYGuoL](https://github.com/ZhYGuoL)
+* Rupert Maiti, [@baburama](https://github.com/baburama)
+* Kirpa Chandok, [@krpchandok](https://github.com/krpchandok)
+* Anastasiya Volgina, [@Anastasiya006](https://github.com/Anastasiya006)
+* Ryan Xiao, [@RyanXiaoo](https://github.com/RyanXiaoo)
+* Likhitha Koppula, [@likhithak10](https://github.com/likhithak10)
