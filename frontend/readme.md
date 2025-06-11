@@ -20,9 +20,14 @@
    npm run dev
    ```
 
-4. **Visit your app**
+4. **Setup Environment Variables**
 
- Open [http://localhost:3000](http://localhost:3000) in your browser.
+   Create a .env file in the frontend folder
+   NEXT_PUBLIC_MAPBOX_TOKEN=mapbox_token_here
+
+5. **Visit your app**
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
