@@ -22,7 +22,8 @@
 
 4. **Setup Environment Variables**
 
-   Create a .env file in the frontend folder
+   Create a .env file in the frontend folder, then add your Mapbox token to the file
+
    NEXT_PUBLIC_MAPBOX_TOKEN=mapbox_token_here
 
 5. **Visit your app**
