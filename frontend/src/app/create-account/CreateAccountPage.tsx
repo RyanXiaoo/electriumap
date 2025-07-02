@@ -2,12 +2,16 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; 
+import { auth } from "../../../Firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function CreateAccountPage(){
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null); // Firebase error handling
+
   const router = useRouter(); 
 
   // update user's input via 'value'
@@ -16,11 +20,19 @@ function CreateAccountPage(){
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Account Created.");
-    // route to login page 
-    router.push("/Login");
+    setError(null); // clear previous errors
+
+    try {
+      // attempt to create a new user with Firebase
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      console.log("Account created!");
+      router.push("/Login");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message);
+    }
   };
 
   return (
@@ -50,6 +62,10 @@ function CreateAccountPage(){
           className="w-full p-3 border rounded-xl focus:outline-none focus:ring focus:border-blue-400 text-black"
           required
         />
+
+        {error && (
+          <p className="text-red-500 text-sm">{error}</p>
+        )}
 
         <button
           type="submit"
