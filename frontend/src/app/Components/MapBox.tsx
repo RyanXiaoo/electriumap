@@ -9,20 +9,14 @@ import pinsData from "./pins.json";
 type MapBoxProps = {
   width?: string;
   height?: string;
+  onPinDrop?: (lat: number, lng:number) => void;
 };
 
-const MapBox = ({ width = "100vw", height = "100vh" }: MapBoxProps) => {
+const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) => {
   // Store marker references outside useEffect
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  //controls whether pin drop overlay is showing
-  const [showPinOverlay, setPinOverlay] = useState(false);
-  //displays last coordinates on pin drop overlay
-  const [lastCoords, setLastCoords] = useState<{
-    lng: number;
-    lat: number;
-  } | null>(null);
   // Store current bounds and visible pins
   const [currentBounds, setCurrentBounds] = useState<Bounds | null>(null);
   const [visiblePins, setVisiblePins] = useState<PinData[]>([]);
@@ -95,7 +89,7 @@ const MapBox = ({ width = "100vw", height = "100vh" }: MapBoxProps) => {
         container: mapContainerRef.current,
         center: [-74.5, 40],
         zoom: 9,
-        style: "mapbox://styles/mapbox/streets-v11",
+        style: "mapbox://styles/hannahwiens/cmcj9t5wf000v01p6chg0e07a",
       });
 
       // Add moveend and zoomend event listeners
@@ -126,16 +120,13 @@ const MapBox = ({ width = "100vw", height = "100vh" }: MapBoxProps) => {
           marker.remove();
           // Remove from marker refs
           markersRef.current = markersRef.current.filter((m) => m !== marker);
-          //Removes pin drop overlay
-          setPinOverlay(false);
-          setLastCoords(null);
         });
         // Log coordinates
         console.log("Dropped pin at:", { lng, lat });
 
         //Shows white overlay when pin is dropped
-        setPinOverlay(true);
-        setLastCoords({ lng, lat });
+        //setPinOverlay(true);
+        onPinDrop?.(lat, lng);
       });
     }
 
@@ -155,7 +146,7 @@ const MapBox = ({ width = "100vw", height = "100vh" }: MapBoxProps) => {
       />
 
       {/* Debug info overlay */}
-      <div className="fixed top-4 left-4 backdrop-blur-lg bg-white/30 border border-white/60 rounded-2xl shadow-lg p-4 text-black">
+      <div className="fixed top-22 left-10 backdrop-blur-lg bg-white/30 border border-white/60 rounded-2xl shadow-lg p-4 text-black">
         <p className="font-semibold text-sm">Viewport Info</p>
         <p className="text-xs">Visible Pins: {visiblePins.length}</p>
         <p className="text-xs">Total Pins: {pinsData.length}</p>
@@ -166,14 +157,6 @@ const MapBox = ({ width = "100vw", height = "100vh" }: MapBoxProps) => {
           </>
         )}
       </div>
-
-      {showPinOverlay && lastCoords && ( //Text inside pin drop overlay
-        <div className="fixed bottom-10 p-4 right-10 backdrop-blur-lg bg-white/30 border border-white/60 rounded-2xl shadow-lg w-80 h-100 text-black">
-          <p className="font-semibold text-lg text-black">You dropped a pin!</p>
-          <p className="font-sm"> Longitude: {lastCoords.lng.toFixed(5)}</p>
-          <p className="font-sm"> Latitude: {lastCoords.lat.toFixed(5)}</p>
-        </div>
-      )}
     </>
   );
 };
