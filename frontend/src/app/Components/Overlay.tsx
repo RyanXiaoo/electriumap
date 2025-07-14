@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useState, useEffect} from 'react';
+import { addOutletFrontend } from "../utils/addOutlet";
 import { LucideZap, LucideBookmark, LucideClock, LucidePlus, LucideSearch, LucideUpload } from 'lucide-react';
 
 interface OverlayProps {
@@ -183,11 +184,24 @@ const AddOutlet: React.FC<OverlayProps> = ({showPinOverlay, coords, onClose }) =
             <div className="flex justify-end w-full">
 
                 <button
-                  onClick={() => {
-                    if (address != "" && outletCount != 0){
-                      setShowAddOutlet(prev => !prev)
-                    }}
-                  }
+                  onClick={async () => {
+                    if (!address || outletCount <= 0) return;
+                  
+                    try {
+                      await addOutletFrontend({
+                        userName: "TestUser", 
+                        userId: "user123",     
+                        locationName: address, 
+                        chargerType: powerType || selectedPort,
+                        description: `Condition: ${selectedCondition}. ${extraDetails}`,
+                      });
+                  
+                      setShowAddOutlet(false);
+                      onClose(); // optionally close pin overlay too
+                    } catch (err) {
+                      console.error("Error submitting outlet:", err);
+                    }
+                  }}
                   className="text-md font-semibold bg-lime-700 rounded-4xl mt-3 relative z-60 text-white pl-4 pr-4 p-1.5">
                     Submit
               </button>
