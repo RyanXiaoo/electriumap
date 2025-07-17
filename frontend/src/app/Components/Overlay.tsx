@@ -1,14 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  LucideZap,
-  LucideBookmark,
-  LucideClock,
-  LucidePlus,
-  LucideSearch,
-  LucideUpload,
-} from "lucide-react";
+import React, {useState, useEffect} from 'react';
+import { addOutletFrontend } from "../utils/addOutlet";
+import { LucideZap, LucideBookmark, LucideClock, LucidePlus, LucideSearch, LucideUpload } from 'lucide-react';
 
 interface OverlayProps {
   showPinOverlay: boolean;
@@ -207,9 +201,21 @@ const AddOutlet: React.FC<OverlayProps> = ({
           </div>
           <div className="flex justify-end w-full">
             <button
-              onClick={() => {
+              onClick={ async () => {
                 if (address != "" && outletCount != 0) {
-                  setShowAddOutlet((prev) => !prev);
+                  try {
+                    await addOutletFrontend({
+                      userName: "TestUser", 
+                      userId: "user123",     
+                      locationName: address, 
+                      chargerType: powerType || selectedPort,
+                      description: `Condition: ${selectedCondition}. ${extraDetails}`,
+                    });
+                
+                    setShowAddOutlet(false);
+                  } catch (err) {
+                    console.error("Error submitting outlet:", err);
+                  }
                 }
               }}
               className="text-md font-semibold bg-lime-700 rounded-4xl mt-3 relative z-60 text-white pl-4 pr-4 p-1.5"
@@ -263,6 +269,7 @@ const AddOutlet: React.FC<OverlayProps> = ({
                 [Insert User Email Here]
               </div>
             </div>
+
             <div className="w-full flex flex-col gap-4">
               <button className="flex items-center gap-3 text-md font-semibold bg-neutral-800 hover:bg-lime-900 transition-colors rounded-xl text-lime-400 px-5 py-3 w-full shadow border border-white/10">
                 <LucidePlus className="w-5 h-5 text-lime-400" />
