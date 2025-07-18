@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from 'react';
 import { addOutletFrontend } from "../utils/addOutlet";
+import { isOnLand } from "../utils/addOutlet";
 import { LucideZap, LucideBookmark, LucideClock, LucidePlus, LucideSearch, LucideUpload } from 'lucide-react';
 
 interface OverlayProps {
@@ -33,6 +34,7 @@ const AddOutlet: React.FC<OverlayProps> = ({
       setAddress(`${coords?.lng.toFixed(5)} ${coords?.lat.toFixed(5)}`);
     }
   }, [coords]);
+  
 
   return (
     <div className="fixed top-4 left-0 w-full flex items-center justify-between px-8 z-50 h-14">

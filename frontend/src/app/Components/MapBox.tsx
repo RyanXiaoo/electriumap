@@ -6,6 +6,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { FeatureCollection, Point, Feature } from "geojson";
 import { debounce, Bounds, PinData, isPointInBounds } from "./utils";
 import pinsData from "./pins.json";
+import { isOnLand } from "../utils/addOutlet";
+
 
 // Helper: Convert pinsData to GeoJSON FeatureCollection
 const pinsToGeoJSON = (pins: PinData[]): FeatureCollection<Point> => ({
@@ -224,6 +226,11 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
       // Add click event to drop a pin and log coordinates
       mapRef.current.on("click", (e: mapboxgl.MapMouseEvent) => {
         const { lng, lat } = e.lngLat;
+        const land =  isOnLand(lat, lng);
+        if (!land) {
+          console.log("Dropped point is in water — ignoring.");
+          return; //  prevent pin drop
+        }
         // Create a marker
         const marker = new mapboxgl.Marker()
           .setLngLat([lng, lat])
