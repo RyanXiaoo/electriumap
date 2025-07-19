@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { debounce, Bounds, PinData, isPointInBounds } from "./utils";
-import pinsData from "./pins.json";
+import pinsData from "./pins.json"; // fallback sample pins – replaced when Firestore loads
 
 type MapBoxProps = {
   width?: string;
@@ -20,15 +20,31 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
   // Store current bounds and visible pins
   const [currentBounds, setCurrentBounds] = useState<Bounds | null>(null);
   const [visiblePins, setVisiblePins] = useState<PinData[]>([]);
-  const [ outlets, setOutlets ] = useState<PinData[]>([]); 
+  // All pins available to render (starts with sample data, replaced by Firestore)
+  const [allPins, setAllPins] = useState<PinData[]>(pinsData);
 
-  // Fetch outlets data from the backend
+  // Fetch outlets data from the backend and map to PinData shape
   useEffect(() => {
     fetch("/api/outlets")
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
-            setOutlets(data);
-            console.log("Fetched outlets:", data);
+        if (!Array.isArray(data)) return;
+
+        const mapped: PinData[] = data
+          .filter((d: any) => typeof d.latitude === "number" && typeof d.longitude === "number")
+          .map((d: any, idx: number) => ({
+            id: d.id ?? String(idx),
+            lat: d.latitude,
+            lng: d.longitude,
+            title: d.locationName ?? "Outlet",
+            description: d.description ?? "",
+            category: d.chargerType ?? "",
+          }));
+
+        if (mapped.length) {
+          setAllPins(mapped);
+        }
+        console.log("Fetched outlets:", mapped);
       })
       .catch(console.error);
   }, []);
@@ -48,8 +64,8 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
 
   // Function to filter pins based on bounds
   const filterPinsByBounds = useCallback((bounds: Bounds): PinData[] => {
-    return pinsData.filter(pin => isPointInBounds(pin, bounds));
-  }, []);
+    return allPins.filter((pin) => isPointInBounds(pin, bounds));
+  }, [allPins]);
 
   // Function to clear all markers
   const clearAllMarkers = useCallback(() => {
@@ -63,17 +79,19 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
 
     clearAllMarkers();
 
-    pins.forEach(pin => {
+    pins.forEach((pin) => {
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `<div>
+          <h3 style=\"margin:0;font-weight:600;\">${pin.title}</h3>
+          ${pin.description ? `<p style=\"margin:4px 0;\">${pin.description}</p>` : ""}
+          ${pin.category ? `<p style=\"margin:0;font-size:12px;\">Type: ${pin.category}</p>` : ""}
+        </div>`
+      );
+
       const marker = new mapboxgl.Marker()
         .setLngLat([pin.lng, pin.lat])
+        .setPopup(popup)
         .addTo(mapRef.current!);
-
-      // Add click event to show pin info
-      marker.getElement().addEventListener("click", function (ev) {
-        ev.stopPropagation(); // Prevent map click event
-        console.log("Pin clicked:", pin);
-        // You can add a popup or tooltip here
-      });
 
       markersRef.current.push(marker);
     });
@@ -145,7 +163,13 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
     return () => {
       // Remove all markers
       clearAllMarkers();
-      mapRef.current?.remove();
+      try {
+        mapRef.current?.remove();
+      } catch (err) {
+        // Swallow Mapbox GL indoor manager bug in dev Strict Mode
+        console.warn('Mapbox remove error (ignored):', err);
+      }
+      mapRef.current = null; // ensure we can recreate the map on remount (e.g. in React Strict Mode)
     };
   }, [debouncedUpdatePins, getBounds, filterPinsByBounds, renderPins, clearAllMarkers]);
 
@@ -161,7 +185,7 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
       <div className="fixed top-22 left-10 backdrop-blur-lg bg-white/30 border border-white/60 rounded-2xl shadow-lg p-4 text-black">
         <p className="font-semibold text-sm">Viewport Info</p>
         <p className="text-xs">Visible Pins: {visiblePins.length}</p>
-        <p className="text-xs">Total Pins: {pinsData.length}</p>
+        <p className="text-xs">Total Pins: {allPins.length}</p>
         {currentBounds && (
           <>
             <p className="text-xs">SW: [{currentBounds.sw[0].toFixed(3)}, {currentBounds.sw[1].toFixed(3)}]</p>
