@@ -25,13 +25,15 @@ const HEATMAP_SOURCE_ID = "pins-heatmap-source";
 const HEATMAP_LAYER_ID  = "pins-heatmap-layer";
 const HEATMAP_MAX_ZOOM  = 11; // heatmap visible up to zoom 10
 
-type MapBoxProps = {
+interface MapBoxProps {
   width?: string;
   height?: string;
-  onPinDrop?: (lat: number, lng:number) => void;
-};
+  onPinDrop?: (lat: number, lng: number) => void;
+  onMapLoad?: () => void;
+  flyTo?: { lng: number; lat: number } | null;
+}
 
-const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) => {
+const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxProps) => {
   // Store marker references outside useEffect
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +44,20 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop}: MapBoxProps) =>
   // All pins available to render (starts with sample data, replaced by Firestore)
   const [allPins, setAllPins] = useState<PinData[]>(pinsData);
 
+
   // Fetch outlets data from the backend and map to PinData shape
+  // Effect to handle flying to searched location
+  useEffect(() => {
+    if (flyTo && mapRef.current) {
+      mapRef.current.flyTo({
+        center: [flyTo.lng, flyTo.lat],
+        zoom: 14,
+        essential: true
+      });
+    }
+  }, [flyTo]);
+
+  // Fetch outlets data from the backend
   useEffect(() => {
     fetch("/api/outlets")
       .then((res) => res.json())
