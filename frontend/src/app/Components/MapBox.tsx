@@ -29,11 +29,12 @@ interface MapBoxProps {
   width?: string;
   height?: string;
   onPinDrop?: (lat: number, lng: number) => void;
+  lightMode?: boolean;
   onMapLoad?: () => void;
   flyTo?: { lng: number; lat: number } | null;
 }
 
-const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxProps) => {
+const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, lightMode, flyTo }: MapBoxProps) => {
   // Store marker references outside useEffect
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -114,6 +115,10 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
     clearAllMarkers();
 
     pins.forEach((pin) => {
+      const el = document.createElement("div");
+      el.innerHTML = `<img src="/images/pin_lightning.webp" style="width: 50px; height: 50px;" />`;
+      el.style.cursor = "pointer";
+
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
         `<div>
           <h3 style=\"margin:0;font-weight:600;\">${pin.title}</h3>
@@ -122,10 +127,15 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
         </div>`
       );
 
-      const marker = new mapboxgl.Marker()
+      const marker = new mapboxgl.Marker(el)
         .setLngLat([pin.lng, pin.lat])
         .setPopup(popup)
         .addTo(mapRef.current!);
+
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        console.log("Pin clicked:", pin);
+      });
 
       markersRef.current.push(marker);
     });
@@ -263,10 +273,16 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
           console.log("Dropped point is in water — ignoring.");
           return; //  prevent pin drop
         }
+
+        const el = document.createElement("div");
+        el.innerHTML =  `<img src="/images/pin_lightning.webp" style="width: 50px; height: 50px;" />`;
+        el.style.cursor = "pointer";
+
         // Create a marker
-        const marker = new mapboxgl.Marker()
+        const marker = new mapboxgl.Marker(el)
           .setLngLat([lng, lat])
           .addTo(mapRef.current!);
+          
         // Add to marker refs
         markersRef.current.push(marker);
         // Add click event to remove marker
@@ -297,6 +313,16 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
       mapRef.current = null; // ensure we can recreate the map on remount (e.g. in React Strict Mode)
     };
   }, [debouncedUpdatePins, getBounds, filterPinsByBounds, renderPins, clearAllMarkers]);
+  
+  useEffect(() => {
+      if (!mapRef.current) return;
+
+      const newStyle = lightMode
+      ? "mapbox://styles/hannahwiens/cmcjq7lyu003l01p6a93lhg38"
+      : "mapbox://styles/hannahwiens/cmcj9t5wf000v01p6chg0e07a"; 
+
+      mapRef.current.setStyle(newStyle)
+    })
 
   return (
     <>
@@ -324,3 +350,4 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
   );
 };
 export default MapBox;
+
