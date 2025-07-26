@@ -1,5 +1,6 @@
-import { collection, addDoc, getDocs, updateDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc, getDocs, updateDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { getAuth } from "firebase/auth";
 import { geohashForLocation, geohashQueryBounds, distanceBetween } from "geofire-common";
 import { point } from "@turf/helpers";
 import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
@@ -44,6 +45,22 @@ export async function addOutlet(outlet: Outlet) {
     });
     //log document id
     console.log("Outlet added to database with ID: ", docRef.id);
+
+    // add outlet reference under the user's document
+    const auth = getAuth();
+    const userId = auth.currentUser?.uid;
+    
+    if (userId) {
+      const outletRefInUserDoc = doc(db, "Users", userId, "Outlets", docRef.id);
+
+      // Only add empty document (to comply with Firestore rules)
+      await setDoc(outletRefInUserDoc, {});
+
+      console.log("Added reference to outlet in user's subcollection.");
+    } else {
+      console.error("No authenticated user found.");
+    }
+    
   } catch (e) {
     //log errorss
     console.error("Error adding outlet to database: ", e);
