@@ -3,13 +3,11 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { FeatureCollection, Point, Feature } from "geojson";
 import { debounce, Bounds, PinData, isPointInBounds } from "./utils";
 import pinsData from "./pins.json";            // fallback sample pins – replaced when Firestore loads
 import { isOnLand } from "../utils/addOutlet";
 
 import type { Feature, FeatureCollection, Point } from "geojson";
-import type { PinData } from "./types"; // adjust path if necessary
 
 // Convert plain pins to a GeoJSON FeatureCollection
 const pinsToGeoJSON = (pins: PinData[]): FeatureCollection<Point> => ({
@@ -42,7 +40,9 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
   const [currentBounds, setCurrentBounds] = useState<Bounds | null>(null);
   const [visiblePins, setVisiblePins] = useState<PinData[]>([]);
   // All pins available to render (starts with sample data, replaced by Firestore)
-  const [allPins, setAllPins] = useState<PinData[]>(pinsData);
+  const [allPins, setAllPins] = useState<PinData[]>(
+    pinsData.map((p: any) => ({ ...p, fromDb: false }))
+  );
 
 
   // Fetch outlets data from the backend and map to PinData shape
@@ -73,6 +73,7 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
             title: d.locationName ?? "Outlet",
             description: d.description ?? "",
             category: d.chargerType ?? "",
+            fromDb: true,
           }));
 
         if (mapped.length) {
@@ -114,19 +115,30 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
     clearAllMarkers();
 
     pins.forEach((pin) => {
-      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-        `<div>
+      // Build fallback and final HTML
+      const finalHtml = (() => {
+        const desc = pin.description?.trim();
+        const cat = pin.category?.trim();
+        if (pin.fromDb && !desc && !cat) {
+          return `<div>
+            <h3 style=\"margin:0;font-weight:600;\">${pin.title}</h3>
+            <p style=\"margin:4px 0;color:#666;\">No information found.</p>
+          </div>`;
+        }
+        return `<div>
           <h3 style=\"margin:0;font-weight:600;\">${pin.title}</h3>
-          ${pin.description ? `<p style=\"margin:4px 0;\">${pin.description}</p>` : ""}
-          ${pin.category ? `<p style=\"margin:0;font-size:12px;\">Type: ${pin.category}</p>` : ""}
-        </div>`
-      );
+          ${desc ? `<p style=\"margin:4px 0;\">${desc}</p>` : ""}
+          ${cat ? `<p style=\"margin:0;font-size:12px;\">Type: ${cat}</p>` : ""}
+        </div>`;
+      })();
 
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(finalHtml);
+       
       const marker = new mapboxgl.Marker()
         .setLngLat([pin.lng, pin.lat])
         .setPopup(popup)
         .addTo(mapRef.current!);
-
+        
       markersRef.current.push(marker);
     });
   }, [clearAllMarkers]);
@@ -257,6 +269,11 @@ const MapBox = ({ width = "100vw", height = "100vh", onPinDrop, flyTo }: MapBoxP
 
       // Add click event to drop a pin and log coordinates
       mapRef.current.on("click", (e: mapboxgl.MapMouseEvent) => {
+        // If the click originated from a marker element, do nothing
+        const targetEl = (e.originalEvent as MouseEvent).target as HTMLElement | null;
+        if (targetEl && targetEl.closest('.mapboxgl-marker')) {
+          return; // let the marker handle its own click (e.g., show popup)
+        }
         const { lng, lat } = e.lngLat;
         const land =  isOnLand(lat, lng);
         if (!land) {
