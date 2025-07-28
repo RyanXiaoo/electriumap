@@ -282,8 +282,8 @@ const AddOutlet: React.FC<OverlayProps> = ({
             <div className="flex justify-end w-full">
 
                 <button
-                  onClick={() => {
-                    if (address != "" && outletCount != 0){
+                  onClick={async () => {
+                    if (address !== "" && outletCount !== 0) {
                       try {
                         await addOutletFrontend({
                           userName: "TestUser", 
@@ -292,13 +292,13 @@ const AddOutlet: React.FC<OverlayProps> = ({
                           chargerType: powerType || selectedPort,
                           description: `Condition: ${selectedCondition}. ${extraDetails}`,
                         });
-                    
+                
                         setShowAddOutlet(false);
                       } catch (err) {
                         console.error("Error submitting outlet:", err);
                       }
-                    }}
-                  }
+                    }
+                  }}
                   className="text-md font-semibold bg-lime-700 rounded-4xl mt-3 relative z-60 pl-4 pr-4 p-1.5">
                     Submit
               </button>

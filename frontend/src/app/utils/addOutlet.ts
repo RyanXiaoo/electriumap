@@ -78,7 +78,46 @@ async function getLatLngFromAddress(address: string): Promise<{ lat: number; lng
 // Frontend wrapper function
 export async function addOutletFrontend(input: FrontendOutletInput): Promise<void> {
   try {
+
+    const locationName = input.locationName.trim();
+    const chargerType = input.chargerType.trim();
+    const userName = input.userName.trim();
+    const userId = input.userId.trim();
+    const description = input.description.trim();
+
+    // --- Basic Validation ---
+    if (!locationName || locationName.length < 5) {
+      throw new Error("Please enter a valid address (5+ characters).");
+    }
+
+    if (!chargerType || chargerType.length < 2) {
+      throw new Error("Please enter a valid charger type.");
+    }
+
+    if (!userName || userName.length < 2) {
+      throw new Error("Please enter a valid user name.");
+    }
+
+    if (!userId || userId.length < 3) {
+      throw new Error("Invalid user ID.");
+    }
+    if(!description){
+      throw new Error("No Description.");
+    }
+
     const { lat, lng } = await getLatLngFromAddress(input.locationName);
+
+    if (
+      isNaN(lat) ||
+      isNaN(lng) ||
+      lat < -90 ||
+      lat > 90 ||
+      lng < -180 ||
+      lng > 180
+    ) {
+      throw new Error("Geocoding returned invalid coordinates.");
+    }
+    
     if (!isOnLand(lat, lng)) {
       throw new Error("The selected location is not on land.");
     }
