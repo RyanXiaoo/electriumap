@@ -1,0 +1,13 @@
+train: train/images
+val: test/images
+test: test/images
+
+nc: 3
+names: ['type_a', 'type_b', 'type_b_tc']
+
+roboflow:
+  workspace: projects-yf2b0
+  project: electrium-outlet-detector
+  version: 6
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/projects-yf2b0/electrium-outlet-detector/dataset/6

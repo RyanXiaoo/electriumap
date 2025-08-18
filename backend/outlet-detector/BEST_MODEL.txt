@@ -1,0 +1,32 @@
+BEST PERFORMING MODEL
+========================
+
+IMPORTANT: Model files are NOT included in this repository due to GitHub's 100MB size limit.
+
+Model Information: train31
+Performance Metrics:
+- mAP@0.5: 90.69%
+- mAP@0.5:0.95: 79.01%  
+- Precision: 82.11%
+- Recall: 73.49%
+- Training Epochs: 284
+
+Training Details:
+- Trained with optimized hyperparameters from tune_yolov8.py
+- Used train_tuned_yolov8.py script
+- Based on YOLOv8 Medium (yolov8m.pt)
+- Dataset: 90 images with 3x augmentation (270 total samples)
+- Classes: type_a, type_b, type_b_tc
+
+To Reproduce This Model:
+1. Run: python train_tuned_yolov8.py
+2. Model will be saved to: runs/detect/train*/weights/best.pt
+
+Usage (after training):
+```python
+from ultralytics import YOLO
+model = YOLO('runs/detect/train31/weights/best.pt')  # Adjust path as needed
+results = model('path/to/image.jpg')
+```
+
+Date Identified: January 2025 

@@ -1,2 +1,38 @@
 node_modules/
-node_modules/
+
+# Model files and training outputs (too large for GitHub)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.mlmodel
+*.mlpackage
+
+# Training runs and results
+runs/
+backend/outlet-detector/runs/
+**/runs/
+
+# YOLOv8 cache files
+*.cache
+
+# Dataset files (if large)
+# backend/outlet-detector/data/
+
+# macOS
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.env
